@@ -1,0 +1,20 @@
+---
+- name: Automated Ubuntu Server Patching
+  hosts: linux_servers
+  become: yes
+  serial: 1
+  gather_facts: yes
+
+  tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    - name: Upgrade installed packages
+      apt:
+        upgrade: yes
+      register: patch_result
+
+    - name: Display patch result
+      debug:
+        var: patch_result

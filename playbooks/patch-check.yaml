@@ -1,0 +1,31 @@
+---
+- name: Linux Patch Assessment
+  hosts: linux_servers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+
+    - name: Check available updates
+      shell: apt list --upgradable 2>/dev/null
+      register: updates
+      changed_when: false
+
+    - name: Display update count
+      debug:
+        msg: "{{ updates.stdout_lines | length - 1 }} packages available for upgrade"
+
+    - name: Save patch assessment report
+      copy:
+        content: |
+          Server: {{ inventory_hostname }}
+          OS: {{ ansible_distribution }} {{ ansible_distribution_version }}
+          Kernel: {{ ansible_kernel }}
+          Assessment Date: {{ ansible_date_time.iso8601 }}
+          Available Updates:
+          {{ updates.stdout }}
+        dest: "/tmp/patch-report-{{ inventory_hostname }}.txt"
+        mode: '0644'

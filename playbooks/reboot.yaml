@@ -1,0 +1,17 @@
+---
+- name: Reboot Patched Linux Servers
+  hosts: linux_servers
+  become: yes
+  serial: 1
+
+  tasks:
+    - name: Check reboot requirement
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_flag
+
+    - name: Reboot server if required
+      reboot:
+        reboot_timeout: 600
+        test_command: whoami
+      when: reboot_flag.stat.exists

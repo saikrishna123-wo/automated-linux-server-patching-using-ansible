@@ -1,0 +1,35 @@
+---
+- name: Post Patching Server Validation
+  hosts: linux_servers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Check server uptime
+      command: uptime
+      register: uptime_result
+      changed_when: false
+
+    - name: Check disk usage
+      command: df -h /
+      register: disk_result
+      changed_when: false
+
+    - name: Check memory usage
+      command: free -h
+      register: memory_result
+      changed_when: false
+
+    - name: Check SSH service
+      command: systemctl is-active ssh
+      register: ssh_result
+      changed_when: false
+
+    - name: Display validation results
+      debug:
+        msg:
+          - "Server: {{ inventory_hostname }}"
+          - "Uptime: {{ uptime_result.stdout }}"
+          - "Disk: {{ disk_result.stdout }}"
+          - "Memory: {{ memory_result.stdout }}"
+          - "SSH Service: {{ ssh_result.stdout }}"

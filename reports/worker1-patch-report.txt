@@ -1,0 +1,29 @@
+AUTOMATED LINUX SERVER PATCHING REPORT
+======================================
+
+Server: worker1
+Hostname: ip-172-31-39-40
+OS: Ubuntu 24.04
+Kernel: 7.0.0-1014-aws
+Date: 2026-11-09T14:45:35Z
+
+UPTIME:
+ 14:45:36 up  3:27,  4 users,  load average: 0.00, 0.00, 0.00
+
+DISK USAGE:
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       6.8G  2.3G  4.5G  35% /
+
+MEMORY:
+               total        used        free      shared  buff/cache   available
+Mem:           909Mi       349Mi       289Mi       2.7Mi       390Mi       559Mi
+Swap:             0B          0B          0B
+
+SSH SERVICE:
+active
+
+REBOOT REQUIRED:
+False
+
+REMAINING UPDATES:
+Listing...
